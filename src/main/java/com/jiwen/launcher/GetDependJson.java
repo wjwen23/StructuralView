@@ -14,8 +14,8 @@ import java.io.InputStreamReader;
  * step1 利用denpends.jar生成描述依赖的json文件
  **/
 public class GetDependJson {
-    static String jarPath = "D:\\gitpoj\\java\\StructrualView\\src\\main\\resources\\depends.jar";
-    static String out = "D:\\gitpoj\\java\\StructrualView\\src\\main\\resources\\out";
+    static String jarPath = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\depends.jar";
+    static String out = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\out";
     public static void main(String[] args) {
         String filePath = "C:\\Users\\22166\\out\\SpringMVCDemo-master";
         File file = new File(filePath);

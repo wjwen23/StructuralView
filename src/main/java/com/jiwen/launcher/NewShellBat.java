@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class NewShellBat {
-    static String jarPath = "D:\\gitpoj\\java\\StructrualView\\src\\main\\resources\\depends.jar";
-    static String out = "D:\\gitpoj\\java\\StructrualView\\src\\main\\resources\\out";
+    static String jarPath = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\depends.jar";
+    static String out = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\out";
     private static long getTotalSizeOfFilesInDir(final File file) {
         if (file.isFile())
             return file.length();

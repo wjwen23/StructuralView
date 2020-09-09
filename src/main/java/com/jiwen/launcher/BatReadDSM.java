@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class BatReadDSM extends Object  {
-    static String out = "C:\\Users\\22166\\Desktop\\dsmviewer\\dsmviewer\\src\\resources\\out";
+    static String out = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\out";
 
     public static int[][] getMatrix(List<MatrixElement> elements,HashMap<String,Integer> map){
         int[][] res = new int[elements.size()][elements.size()];
