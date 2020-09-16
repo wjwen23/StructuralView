@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ClusterAnalysis {
 
+    int cnt = 1;
     // TODO 如何将其树形表示
     public List<Cluster> startAnalysis(List<DataPoint> dataPoints, int ClusterNum){
         List<Cluster> finalClusters = new ArrayList<Cluster>();
@@ -72,13 +73,34 @@ public class ClusterAnalysis {
     }
 
     private List<Cluster> mergeCluster(List<Cluster> clusters, int mergeIndexA, int mergeIndexB){
+
         if (mergeIndexA != mergeIndexB) {
             // 将cluster[mergeIndexB]中的DataPoint加入到 cluster[mergeIndexA]
+            List<Cluster> clusterList = new ArrayList<>();
+            for(int i = 0;i<clusters.size();i++){
+                if(i != mergeIndexA && i!= mergeIndexB){
+                    clusterList.add(clusters.get(i));
+                }
+            }
+            Cluster cluster = new Cluster();
+            cluster.setClusterName("cluster" + cnt);
+            List<DataPoint> dpC = new ArrayList<>();
+            cnt++;
             Cluster clusterA = clusters.get(mergeIndexA);
             Cluster clusterB = clusters.get(mergeIndexB);
 
             List<DataPoint> dpA = clusterA.getDataPoints();
             List<DataPoint> dpB = clusterB.getDataPoints();
+            /** 新逻辑 */
+            for (DataPoint dp : dpA) {
+                DataPoint tempDp = new DataPoint();
+//                tempDp.setDataPointName(dp.getDataPointName());
+//                tempDp.setDimensioin(dp.getDimensioin());
+//                tempDp.setCluster(clusterA);
+                tempDp = dp;
+                tempDp.setCluster(cluster);
+                dpC.add(tempDp);
+            }
 
             for (DataPoint dp : dpB) {
                 DataPoint tempDp = new DataPoint();
@@ -86,17 +108,34 @@ public class ClusterAnalysis {
 //                tempDp.setDimensioin(dp.getDimensioin());
 //                tempDp.setCluster(clusterA);
                 tempDp = dp;
-                tempDp.setCluster(clusterA);
+                tempDp.setCluster(cluster);
+                dpC.add(tempDp);
+            }
+            cluster.setDataPoints(dpC);
+            List<Cluster> clusterArrayList = new ArrayList<>();
+            clusterArrayList.add(clusterA);
+            clusterArrayList.add(clusterB);
+            cluster.setChildren(clusterArrayList);
+            clusterList.add(cluster);
+            return clusterList;
+            /** 老逻辑 */
+/*            for (DataPoint dp : dpB) {
+                DataPoint tempDp = new DataPoint();
+//                tempDp.setDataPointName(dp.getDataPointName());
+//                tempDp.setDimensioin(dp.getDimensioin());
+//                tempDp.setCluster(clusterA);
+                tempDp = dp;
+                tempDp.setCluster(cluster);
                 dpA.add(tempDp);
             }
 
             clusterA.setDataPoints(dpA);
 
             // List<Cluster> clusters中移除cluster[mergeIndexB]
-            clusters.remove(mergeIndexB);
+            clusters.remove(mergeIndexB);*/
+        }else {
+            return clusters;
         }
-
-        return clusters;
     }
 
     // 初始化类簇
@@ -217,5 +256,74 @@ public class ClusterAnalysis {
         }
 */
 
+    }
+
+    public List<Cluster> hCluster(List<DataPoint> dataPoints, int num) {
+        ClusterAnalysis ca=new ClusterAnalysis();
+        List<Cluster> clusters=ca.startAnalysis(dataPoints, num);
+        return clusters;
+    }
+
+    public Cluster hAnalysis(List<Cluster> clusters, int num) {
+        List<Cluster> finalClusters = clusters;
+        System.out.println("初始聚类如下， 共有" + finalClusters.size() + "个类簇");
+        int clusterIndex = 1;
+        for (Cluster cluster : finalClusters) {
+            List<DataPoint> dataPoints1 = cluster.getDataPoints();
+            System.out.print("当前为第" + clusterIndex + "个类簇，里面有文件:");
+            StringBuffer sb = new StringBuffer();
+            for (DataPoint dataPoint : dataPoints1) {
+                sb.append(dataPoint.dataPointName + " ");
+            }
+            System.out.println(sb.toString());
+            clusterIndex++;
+        }
+        int index = 1;
+        while(finalClusters.size() > num){
+            double min=Double.MAX_VALUE;
+            int mergeIndexA=0;
+            int mergeIndexB=0;
+            for(int i=0;i<finalClusters.size();i++){
+                for(int j=0;j<finalClusters.size();j++){
+                    if(i!=j){
+                        Cluster clusterA=finalClusters.get(i);
+                        Cluster clusterB=finalClusters.get(j);
+
+                        List<DataPoint> dataPointsA=clusterA.getDataPoints();
+                        List<DataPoint> dataPointsB=clusterB.getDataPoints();
+
+                        for(int m=0;m<dataPointsA.size();m++){
+                            for(int n=0;n<dataPointsB.size();n++){
+                                double tempDis=getDistance(dataPointsA.get(m),dataPointsB.get(n));
+                                if(tempDis<min){
+                                    min=tempDis;
+                                    mergeIndexA=i;
+                                    mergeIndexB=j;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            finalClusters=mergeCluster(finalClusters,mergeIndexA,mergeIndexB);
+            System.out.println("第" + index + "次聚类结果如下: 共有" + finalClusters.size() + "个聚类簇");
+
+            int tempIndex = 1;
+            for (Cluster cluster : finalClusters) {
+                System.out.print("当前为第" + tempIndex + "个类簇，里面的文件如下:");
+                List<DataPoint> dataPoints1 = cluster.getDataPoints();
+                StringBuilder sb = new StringBuilder();
+                for (DataPoint dataPoint : dataPoints1) {
+                    sb.append(dataPoint.getDataPointName() + " ");
+                }
+                System.out.println(sb.toString());
+                tempIndex++;
+            }
+            index++;
+        }
+        Cluster res = new Cluster();
+        res.setClusterName("root");
+        res.setChildren(finalClusters);
+        return res;
     }
 }

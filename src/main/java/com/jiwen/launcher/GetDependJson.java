@@ -17,7 +17,7 @@ public class GetDependJson {
     static String jarPath = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\depends.jar";
     static String out = "D:\\IdeaProjects\\StructrualView\\src\\main\\resources\\out";
     public static void main(String[] args) {
-        String filePath = "D:\\javaprojects";
+        String filePath = "D:\\javaprojects\\SpringMVCDemo-master";
         File file = new File(filePath);
         String k = file.getAbsolutePath();
         String[] temp = k.split("\\\\");

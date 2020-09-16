@@ -9,6 +9,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author wangjiwen
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 public class ConvertJsonToDSM {
 
 
-    public static int[][] convertJsonToDSM(String filename){
+    public static ArrayList<MatrixElement> convertJsonToElements(String filename){
         ArrayList<MatrixElement> elements = new ArrayList<MatrixElement>();
 
         try  {
@@ -108,7 +111,7 @@ public class ConvertJsonToDSM {
         }
 
         /** 区分group */
-        /*
+
         HashMap<String,Integer> map = new HashMap<>();
         for(MatrixElement me: elements){
             //String temp = me.getName().split(".")[0];
@@ -127,14 +130,18 @@ public class ConvertJsonToDSM {
             }
 
         }
-        */
+
+        return elements;
+
 
         /**将elementList 变为矩阵或者是list*/
-        int size = elements.size();
+/*        int size = elements.size();
         int[][] DSM = new int[size][size];
 
-        return convertElementListToArrays(elements);
+        return convertElementListToArrays(elements);*/
     }
+
+
 
     private static int[][] convertElementListToArrays(ArrayList<MatrixElement> elements) {
         int size = elements.size();
@@ -148,5 +155,26 @@ public class ConvertJsonToDSM {
             }
         }
         return ret;
+    }
+
+    public static int[][] convertElementsToDSM(ArrayList<MatrixElement> elements) {
+        /**将elementList 变为矩阵或者是list*/
+        int size = elements.size();
+        int[][] DSM = new int[size][size];
+
+        return convertElementListToArrays(elements);
+    }
+
+    public static int getNumFromElement(ArrayList<MatrixElement> elements) {
+        int res = 0;
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0;i<elements.size();i++){
+            int temp = elements.get(i).getGroupid();
+            if(!set.contains(temp)){
+                set.add(temp);
+                res++;
+            }
+        }
+        return res;
     }
 }

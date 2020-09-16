@@ -1,7 +1,7 @@
 {
   "schemaVersion" : "1.0",
   "name" : "SpringMVCDemo-master-sdsm",
-  "variables" : [ "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.controller.BlogController_java", "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.controller.MainController_java", "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.model.BlogEntity_java", "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.model.UserEntity_java", "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.repository.BlogRepository_java", "C:.Users.22166.out.SpringMVCDemo-master.src.main.java.com.gaussic.repository.UserRepository_java" ],
+  "variables" : [ "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.controller.BlogController_java", "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.controller.MainController_java", "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.model.BlogEntity_java", "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.model.UserEntity_java", "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.repository.BlogRepository_java", "D:.javaprojects.SpringMVCDemo-master.SpringMVCDemo-master.src.main.java.com.gaussic.repository.UserRepository_java" ],
   "cells" : [ {
     "src" : 1,
     "dest" : 3,
